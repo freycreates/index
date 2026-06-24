@@ -25,39 +25,25 @@ body{
     padding:30px;
 
     background:
-        radial-gradient(
-            circle at top left,
-            rgba(140,82,255,0.20) 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            rgba(255,0,161,0.18) 0%,
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #faf8ff 0%,
-            #fff5fb 100%
-        );
+        radial-gradient(circle at top left, rgba(140,82,255,0.18) 0%, transparent 35%),
+        radial-gradient(circle at bottom right, rgba(255,0,161,0.14) 0%, transparent 35%),
+        linear-gradient(135deg,#faf8ff 0%,#fff5fb 100%);
 }
 
 .card{
     width:100%;
     max-width:430px;
-
     padding:24px;
 
-    background:rgba(255,255,255,0.80);
+    background:rgba(255,255,255,0.82);
     backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
 
     border:1px solid rgba(255,255,255,0.8);
     border-radius:28px;
 
     box-shadow:
-        0 20px 50px rgba(140,82,255,0.12),
-        0 10px 25px rgba(255,0,161,0.08);
+        0 20px 50px rgba(140,82,255,0.10),
+        0 10px 25px rgba(255,0,161,0.06);
 
     text-align:center;
 }
@@ -74,7 +60,6 @@ body{
     font-size:15px;
     color:#666;
     margin-bottom:10px;
-    letter-spacing:.3px;
 }
 
 .location{
@@ -83,6 +68,7 @@ body{
     margin-bottom:24px;
 }
 
+/* BUTTONS */
 .btn{
     display:block;
     text-decoration:none;
@@ -94,26 +80,14 @@ body{
     border-radius:999px;
 
     font-weight:700;
-    font-size:15px;
-    letter-spacing:.3px;
 
-    background:linear-gradient(
-        135deg,
-        #8C52FF 0%,
-        #B43BFF 50%,
-        #FF00A1 100%
-    );
+    background:linear-gradient(135deg,#FF00A1 0%,#8C52FF 100%);
 
-    transition:all .25s ease;
-
-    box-shadow:
-        0 8px 20px rgba(140,82,255,.25);
+    box-shadow:0 10px 22px rgba(140,82,255,.22);
 }
 
 .btn:hover{
     transform:translateY(-4px) scale(1.02);
-    box-shadow:
-        0 15px 30px rgba(140,82,255,.35);
 }
 
 /* GIGS */
@@ -125,13 +99,12 @@ body{
 }
 
 .gigs h3{
+    text-align:center;
     font-size:15px;
     margin-bottom:16px;
     color:#8C52FF;
-    font-weight:700;
     text-transform:uppercase;
     letter-spacing:1px;
-    text-align:center;
 }
 
 .gig{
@@ -139,6 +112,7 @@ body{
     color:#555;
     padding:8px 0;
     line-height:1.5;
+    position:relative;
 }
 
 .date{
@@ -148,18 +122,28 @@ body{
     color:#8C52FF;
 }
 
-.gig strong{
-    color:#333;
+/* HIGHLIGHTS */
+.tag{
+    font-size:10px;
+    font-weight:800;
+    margin-left:8px;
+    padding:3px 8px;
+    border-radius:999px;
+    color:white;
+    background:#8C52FF;
 }
 
-@media (max-width: 480px){
-    .card{
-        padding:20px;
-    }
+.tag.today{
+    background:#FF00A1;
+}
 
-    .btn{
-        padding:15px;
-    }
+.tag.next{
+    background:#8C52FF;
+}
+
+.highlight{
+    transform:scale(1.02);
+    color:#222;
 }
 </style>
 </head>
@@ -168,44 +152,83 @@ body{
 
 <div class="card">
 
-    <img
-        src="https://i.ibb.co/bgvmMBxQ/freyindex.png"
-        alt="Frey"
-        class="logo"
-    >
+    <img src="https://i.ibb.co/bgvmMBxQ/freyindex.png" class="logo" alt="Frey">
 
     <div class="subtitle">
-        DJ • Creative  • Social Media Management
+        DJ • Creative Producer • Social Media
     </div>
 
     <div class="location">
         Based in Amsterdam 🇳🇱
     </div>
 
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank" rel="noopener noreferrer">
-        Instagram
-    </a>
-
-    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank" rel="noopener noreferrer">
-        Resident Advisor
-    </a>
-
-    <a href="mailto:hello@freycreates.nl" class="btn">
-        E-mail for Bookings
-    </a>
+    <a href="https://instagram.com/frey.m4a" class="btn">Instagram</a>
+    <a href="https://ra.co/dj/frey-nl" class="btn">Resident Advisor</a>
+    <a href="mailto:hello@freycreates.nl" class="btn">Bookings & Collaborations</a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
-
-        <div class="gig"><span class="date">27/6</span> <strong>Backsteeg</strong> Rotterdam</div>
-        <div class="gig"><span class="date">29/6</span> <strong>Ferry</strong> Rotterdam</div>
-        <div class="gig"><span class="date">10/7</span> <strong>Pink Noise</strong> Amersfoort</div>
-        <div class="gig"><span class="date">25/7</span> <strong>Milkshake Festival</strong> Amsterdam</div>
-        <div class="gig"><span class="date">31/7</span> <strong>Homomonument</strong> Amsterdam</div>
-        <div class="gig"><span class="date">1/8</span> <strong>Prik Pride</strong> Amsterdam</div>
+        <div id="gigList"></div>
     </div>
 
 </div>
+
+<script>
+const gigs = [
+    { date:"27/6", venue:"Backsteeg, Rotterdam" },
+    { date:"29/6", venue:"Ferry, Rotterdam" },
+    { date:"10/7", venue:"Pink Noise, Amersfoort" },
+    { date:"25/7", venue:"Milkshake Festival, Amsterdam" },
+    { date:"31/7", venue:"Homomonument, Amsterdam" },
+    { date:"1/8", venue:"Prik Pride, Amsterdam" }
+];
+
+// parse dd/mm into real date
+function parseDate(d){
+    const [day, month] = d.split("/");
+    const year = new Date().getFullYear();
+    return new Date(year, month-1, day);
+}
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+// sort gigs
+gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+
+// find next upcoming gig
+let nextIndex = gigs.findIndex(g => parseDate(g.date) >= today);
+if(nextIndex === -1) nextIndex = 0;
+
+const container = document.getElementById("gigList");
+
+gigs.forEach((g, i) => {
+
+    const div = document.createElement("div");
+    div.className = "gig";
+
+    const isToday = parseDate(g.date).getTime() === today.getTime();
+    const isNext = i === nextIndex;
+
+    let tag = "";
+
+    if(isToday){
+        tag = `<span class="tag today">TODAY</span>`;
+        div.classList.add("highlight");
+    } else if(isNext){
+        tag = `<span class="tag next">NEXT UP</span>`;
+        div.classList.add("highlight");
+    }
+
+    div.innerHTML = `
+        <span class="date">${g.date}</span>
+        ${g.venue}
+        ${tag}
+    `;
+
+    container.appendChild(div);
+});
+</script>
 
 </body>
 </html>
