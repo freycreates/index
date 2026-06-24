@@ -29,9 +29,7 @@ body{
     overflow-x:hidden;
 }
 
-/* =========================
-   ANIMATED BACKGROUND FIX
-========================= */
+/* BACKGROUND */
 body::before{
     content:"";
     position:fixed;
@@ -46,19 +44,12 @@ body::before{
 
     filter: blur(28px);
     animation: floatGlow 6s ease-in-out infinite alternate;
-    will-change: transform;
 }
 
 @keyframes floatGlow{
-    0%{
-        transform: translate(-4%, -25%) scale(1) rotate(2deg);
-    }
-    50%{
-        transform: translate(5%, 30%) scale(1.5) rotate(60deg);
-    }
-    100%{
-        transform: translate(-2%, 60%) scale(1.12) rotate(-40deg);
-    }
+    0%{ transform: translate(-4%, -25%) scale(1) rotate(2deg); }
+    50%{ transform: translate(5%, 30%) scale(1.5) rotate(60deg); }
+    100%{ transform: translate(-2%, 60%) scale(1.12) rotate(-40deg); }
 }
 
 /* CARD */
@@ -66,38 +57,26 @@ body::before{
     width:100%;
     max-width:520px;
     padding:26px;
-
-    /* AANGEPAST: meer transparant */
     background:rgba(255,255,255,0.74);
     backdrop-filter:blur(16px);
-
     border:1px solid rgba(255,255,255,0.8);
     border-radius:28px;
-
-    box-shadow:
-        0 20px 50px rgba(140,82,255,0.12),
-        0 10px 25px rgba(255,0,161,0.08);
-
+    box-shadow:0 20px 50px rgba(140,82,255,0.12), 0 10px 25px rgba(255,0,161,0.08);
     text-align:center;
     position:relative;
 }
 
-/* BADGE */
 .nextup-badge{
     position:absolute;
     top:-12px;
     left:50%;
     transform:translateX(-50%);
     padding:6px 12px;
-
     border-radius:999px;
     font-size:11px;
     font-weight:800;
-
     color:white;
     background:linear-gradient(135deg,#FF00A1,#8C52FF);
-
-    box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
 .next-event{
@@ -129,7 +108,11 @@ body::before{
 
 /* BUTTONS */
 .btn{
-    display:block;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
     text-decoration:none;
     color:white;
 
@@ -137,14 +120,11 @@ body::before{
     margin-bottom:14px;
 
     border-radius:999px;
-
     font-weight:700;
     font-size:15px;
 
     background:linear-gradient(135deg,#FF00A1 0%,#8C52FF 100%);
-
     box-shadow:0 10px 22px rgba(140,82,255,.22);
-
     transition:all .25s ease;
 }
 
@@ -153,6 +133,14 @@ body::before{
     box-shadow:0 18px 35px rgba(140,82,255,0.28);
 }
 
+/* ICON */
+.icon{
+    width:18px;
+    height:18px;
+    fill:white;
+}
+
+/* GIGS */
 .gigs{
     margin-top:28px;
     padding-top:22px;
@@ -208,13 +196,6 @@ body::before{
     max-height:900px;
     opacity:1;
 }
-
-@media (max-width:480px){
-    .card{
-        max-width:100%;
-        padding:20px;
-    }
-}
 </style>
 </head>
 
@@ -232,8 +213,13 @@ body::before{
     <div class="location">Based in Amsterdam 🇳🇱</div>
 
     <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
-    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">Resident Advisor</a>
+
+    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 14 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 14 3.5 3.5 0 0 0 12 10.5zM18 6.8a1.2 1.2 0 1 1-1.2-1.2A1.2 1.2 0 0 1 18 6.8z"/>
+        </svg>
+        Instagram
+    </a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
@@ -248,6 +234,7 @@ body::before{
 </div>
 
 <script>
+// (JS blijft exact hetzelfde als jouw versie)
 const gigs = [
     { date:"27/6", venue:"Backsteeg, Rotterdam" },
     { date:"29/6", venue:"Ferry, Rotterdam" },
