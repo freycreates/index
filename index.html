@@ -31,7 +31,7 @@ body{
     background:#faf8ff;
 }
 
-/* BACKGROUND GLOW */
+/* BACKGROUND */
 body::before{
     content:"";
     position:fixed;
@@ -170,6 +170,15 @@ body::before{
 .tag.today{
     background:#FF00A1;
 }
+
+.tag.next{
+    background:#8C52FF;
+}
+
+.highlight{
+    color:#222;
+    transform:scale(1.02);
+}
 </style>
 </head>
 
@@ -222,33 +231,51 @@ function parseDate(d){
     return new Date(year, month-1, day);
 }
 
+const today = new Date();
+today.setHours(0,0,0,0);
+
 gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+
+let nextIndex = gigs.findIndex(g => parseDate(g.date) >= today);
+if(nextIndex === -1) nextIndex = 0;
 
 const container = document.getElementById("gigList");
 
-gigs.forEach((g) => {
+gigs.forEach((g, i) => {
 
     const div = document.createElement("div");
     div.className = "gig";
 
+    const isToday = parseDate(g.date).getTime() === today.getTime();
+    const isNext = i === nextIndex;
+
+    let tag = "";
+
+    if(isToday){
+        tag = `<span class="tag today">TODAY</span>`;
+        div.classList.add("highlight");
+    } else if(isNext){
+        tag = `<span class="tag next">NEXT UP</span>`;
+        div.classList.add("highlight");
+    }
+
     div.innerHTML = `
         <span class="date">${g.date}</span>
         ${g.venue}
+        ${tag}
     `;
 
     container.appendChild(div);
 });
 
-/* 👇 scroll fade-in animation */
+/* scroll fade-in */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
             entry.target.classList.add("visible");
         }
     });
-}, {
-    threshold:0.15
-});
+}, { threshold:0.15 });
 
 document.querySelectorAll(".gig").forEach(el => {
     observer.observe(el);
