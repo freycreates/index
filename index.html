@@ -80,14 +80,18 @@ body{
     border-radius:999px;
 
     font-weight:700;
+    font-size:15px;
 
     background:linear-gradient(135deg,#FF00A1 0%,#8C52FF 100%);
 
     box-shadow:0 10px 22px rgba(140,82,255,.22);
+
+    transition:all .25s ease;
 }
 
 .btn:hover{
     transform:translateY(-4px) scale(1.02);
+    box-shadow:0 18px 35px rgba(140,82,255,.28);
 }
 
 /* GIGS */
@@ -112,7 +116,6 @@ body{
     color:#555;
     padding:8px 0;
     line-height:1.5;
-    position:relative;
 }
 
 .date{
@@ -122,7 +125,6 @@ body{
     color:#8C52FF;
 }
 
-/* HIGHLIGHTS */
 .tag{
     font-size:10px;
     font-weight:800;
@@ -135,10 +137,6 @@ body{
 
 .tag.today{
     background:#FF00A1;
-}
-
-.tag.next{
-    background:#8C52FF;
 }
 
 .highlight{
@@ -155,16 +153,20 @@ body{
     <img src="https://i.ibb.co/bgvmMBxQ/freyindex.png" class="logo" alt="Frey">
 
     <div class="subtitle">
-        DJ • Creative Producer • Social Media
+        DJ • Creative • Social Media Management
     </div>
 
     <div class="location">
         Based in Amsterdam 🇳🇱
     </div>
 
-    <a href="https://instagram.com/frey.m4a" class="btn">Instagram</a>
-    <a href="https://ra.co/dj/frey-nl" class="btn">Resident Advisor</a>
-    <a href="mailto:hello@freycreates.nl" class="btn">Bookings & Collaborations</a>
+    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
+
+    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">Resident Advisor</a>
+
+    <a href="mailto:hello@freycreates.nl" class="btn">
+        ✉️ Bookings & Collabs
+    </a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
@@ -183,7 +185,6 @@ const gigs = [
     { date:"1/8", venue:"Prik Pride, Amsterdam" }
 ];
 
-// parse dd/mm into real date
 function parseDate(d){
     const [day, month] = d.split("/");
     const year = new Date().getFullYear();
@@ -193,10 +194,8 @@ function parseDate(d){
 const today = new Date();
 today.setHours(0,0,0,0);
 
-// sort gigs
 gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
 
-// find next upcoming gig
 let nextIndex = gigs.findIndex(g => parseDate(g.date) >= today);
 if(nextIndex === -1) nextIndex = 0;
 
@@ -216,7 +215,7 @@ gigs.forEach((g, i) => {
         tag = `<span class="tag today">TODAY</span>`;
         div.classList.add("highlight");
     } else if(isNext){
-        tag = `<span class="tag next">NEXT UP</span>`;
+        tag = `<span class="tag">NEXT UP</span>`;
         div.classList.add("highlight");
     }
 
