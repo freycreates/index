@@ -29,36 +29,46 @@ body{
     overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* =========================
+   ANIMATED BACKGROUND FIX
+========================= */
 body::before{
     content:"";
     position:fixed;
-    inset:-40%;
+    inset:-20%;
     z-index:-1;
 
     background:
-        radial-gradient(circle at 15% 25%, rgba(140,82,255,0.65), transparent 38%),
-        radial-gradient(circle at 85% 20%, rgba(255,0,161,0.55), transparent 40%),
-        radial-gradient(circle at 40% 85%, rgba(120,60,255,0.35), transparent 45%),
-        radial-gradient(circle at 90% 90%, rgba(255,0,161,0.30), transparent 42%);
+        radial-gradient(circle at 15% 25%, rgba(140,82,255,0.85), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(255,0,161,0.75), transparent 45%),
+        radial-gradient(circle at 40% 85%, rgba(120,60,255,0.55), transparent 50%),
+        radial-gradient(circle at 80% 90%, rgba(255,0,161,0.45), transparent 55%);
 
-    filter: blur(55px);
-    animation: floatGlow 8s ease-in-out infinite alternate;
+    filter: blur(28px);
+    animation: floatGlow 6s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
 @keyframes floatGlow{
-    0%{ transform: translate(-4%, -2%) scale(1); }
-    50%{ transform: translate(5%, 3%) scale(1.12); }
-    100%{ transform: translate(-2%, 6%) scale(1.06); }
+    0%{
+        transform: translate(-4%, -25%) scale(1) rotate(2deg);
+    }
+    50%{
+        transform: translate(5%, 30%) scale(1.5) rotate(60deg);
+    }
+    100%{
+        transform: translate(-2%, 60%) scale(1.12) rotate(-40deg);
+    }
 }
 
 /* CARD */
 .card{
     width:100%;
-    max-width:520px; /* 👈 desktop wider */
+    max-width:520px;
     padding:26px;
 
-    background:rgba(255,255,255,0.82);
+    /* AANGEPAST: meer transparant */
+    background:rgba(255,255,255,0.74);
     backdrop-filter:blur(16px);
 
     border:1px solid rgba(255,255,255,0.8);
@@ -90,7 +100,6 @@ body::before{
     box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
-/* NEXT EVENT */
 .next-event{
     margin-top:10px;
     font-size:15px;
@@ -98,7 +107,6 @@ body::before{
     color:#222;
 }
 
-/* LOGO */
 .logo{
     width:100%;
     max-width:420px;
@@ -142,10 +150,9 @@ body::before{
 
 .btn:hover{
     transform:translateY(-4px) scale(1.02);
-    box-shadow:0 18px 35px rgba(140,82,255,.28);
+    box-shadow:0 18px 35px rgba(140,82,255,0.28);
 }
 
-/* SECTIONS */
 .gigs{
     margin-top:28px;
     padding-top:22px;
@@ -164,7 +171,6 @@ body::before{
     user-select:none;
 }
 
-/* GIG ITEM */
 .gig{
     font-size:14px;
     color:#555;
@@ -179,9 +185,7 @@ body::before{
     color:#8C52FF;
 }
 
-.past{
-    opacity:0.65;
-}
+.past{ opacity:0.65; }
 
 .played{
     font-size:10px;
@@ -193,7 +197,6 @@ body::before{
     background:#999;
 }
 
-/* ACCORDION */
 #past{
     max-height:0;
     overflow:hidden;
@@ -206,15 +209,10 @@ body::before{
     opacity:1;
 }
 
-/* MOBILE OPTIMIZATION */
 @media (max-width:480px){
     .card{
         max-width:100%;
         padding:20px;
-    }
-
-    .logo{
-        max-width:100%;
     }
 }
 </style>
@@ -230,13 +228,8 @@ body::before{
 
     <img src="https://i.ibb.co/nZfQCNB/freyindex2.png" class="logo" alt="Frey">
 
-    <div class="subtitle">
-        DJ • Creative • Social Media Management
-    </div>
-
-    <div class="location">
-        Based in Amsterdam 🇳🇱
-    </div>
+    <div class="subtitle"><strong>DJ • Creative • Social Media Management</strong></div>
+    <div class="location">Based in Amsterdam 🇳🇱</div>
 
     <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
     <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
@@ -263,7 +256,6 @@ const gigs = [
     { date:"31/7", venue:"Homomonument, Amsterdam" },
     { date:"1/8", venue:"Prik Pride, Amsterdam" },
 
-    /* PAST GIGS */
     { date:"19/6", venue:"Ferry, Rotterdam" },
     { date:"29/5", venue:"Ferry, Rotterdam" },
     { date:"8/5", venue:"NYX, Amsterdam" },
@@ -285,7 +277,6 @@ gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
 const upcoming = gigs.filter(g => parseDate(g.date) >= today);
 const past = gigs.filter(g => parseDate(g.date) < today);
 
-/* NEXT EVENT */
 const nextEventEl = document.getElementById("nextEvent");
 
 if(upcoming.length){
@@ -295,38 +286,30 @@ if(upcoming.length){
     nextEventEl.innerText = "No upcoming gigs";
 }
 
-/* UPCOMING */
 const upcomingContainer = document.getElementById("upcoming");
 
 upcoming.forEach((g) => {
     const div = document.createElement("div");
     div.className = "gig";
-
-    div.innerHTML = `
-        <span class="date">${g.date}</span>
-        ${g.venue}
-    `;
-
+    div.innerHTML = `<span class="date">${g.date}</span>${g.venue}`;
     upcomingContainer.appendChild(div);
 });
 
-/* PAST */
 const pastContainer = document.getElementById("past");
 
-past.forEach((g) => {
-    const div = document.createElement("div");
-    div.className = "gig past";
+past
+    .sort((a,b)=>parseDate(b.date)-parseDate(a.date))
+    .forEach((g) => {
+        const div = document.createElement("div");
+        div.className = "gig past";
+        div.innerHTML = `
+            <span class="date">${g.date}</span>
+            ${g.venue}
+            <span class="played">PLAYED ✓</span>
+        `;
+        pastContainer.appendChild(div);
+    });
 
-    div.innerHTML = `
-        <span class="date">${g.date}</span>
-        ${g.venue}
-        <span class="played">PLAYED ✓</span>
-    `;
-
-    pastContainer.appendChild(div);
-});
-
-/* TOGGLE */
 function togglePast(){
     document.getElementById("past").classList.toggle("open");
 }
