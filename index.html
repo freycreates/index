@@ -23,11 +23,32 @@ body{
     align-items:center;
     justify-content:center;
     padding:30px;
+    overflow:hidden;
+    position:relative;
+    background:#faf8ff;
+}
+
+/* SOFT ANIMATED BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-30%;
+    z-index:-1;
 
     background:
-        radial-gradient(circle at top left, rgba(140,82,255,0.18) 0%, transparent 35%),
-        radial-gradient(circle at bottom right, rgba(255,0,161,0.14) 0%, transparent 35%),
-        linear-gradient(135deg,#faf8ff 0%,#fff5fb 100%);
+        radial-gradient(circle at 20% 20%, rgba(140,82,255,0.35), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(255,0,161,0.25), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(180,80,255,0.18), transparent 50%);
+
+    filter: blur(60px);
+    animation: floatGlow 18s ease-in-out infinite;
+    transform: translate3d(0,0,0);
+}
+
+@keyframes floatGlow{
+    0%{ transform: translate(0%,0%) scale(1); }
+    50%{ transform: translate(3%,-2%) scale(1.05); }
+    100%{ transform: translate(0%,0%) scale(1); }
 }
 
 .card{
@@ -37,6 +58,7 @@ body{
 
     background:rgba(255,255,255,0.82);
     backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
 
     border:1px solid rgba(255,255,255,0.8);
     border-radius:28px;
@@ -160,12 +182,16 @@ body{
         Based in Amsterdam 🇳🇱
     </div>
 
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
-
-    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">Resident Advisor</a>
-
     <a href="mailto:hello@freycreates.nl" class="btn">
         ✉️ Bookings & Collabs
+    </a>
+
+    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">
+        Instagram
+    </a>
+
+    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">
+        Resident Advisor
     </a>
 
     <div class="gigs">
