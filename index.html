@@ -16,9 +16,7 @@
     padding:0;
 }
 
-html{
-    scroll-behavior:smooth;
-}
+html{ scroll-behavior:smooth; }
 
 body{
     font-family:'Open Sans',sans-serif;
@@ -35,24 +33,46 @@ body{
 body::before{
     content:"";
     position:fixed;
-    inset:-30%;
+    inset:-40%;
     z-index:-1;
 
     background:
-        radial-gradient(circle at 20% 20%, rgba(140,82,255,0.35), transparent 45%),
-        radial-gradient(circle at 80% 30%, rgba(255,0,161,0.25), transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(180,80,255,0.18), transparent 50%);
+        radial-gradient(circle at 15% 25%, rgba(140,82,255,0.65), transparent 38%),
+        radial-gradient(circle at 85% 20%, rgba(255,0,161,0.55), transparent 40%),
+        radial-gradient(circle at 40% 85%, rgba(120,60,255,0.35), transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(255,0,161,0.30), transparent 42%);
 
-    filter: blur(60px);
-    animation: floatGlow 18s ease-in-out infinite;
+    filter: blur(55px);
+    animation: floatGlow 8s ease-in-out infinite alternate;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 60% 40%, rgba(140,82,255,0.30), transparent 50%),
+        radial-gradient(circle at 20% 70%, rgba(255,0,161,0.25), transparent 55%);
+
+    filter: blur(80px);
+    animation: floatGlow2 11s ease-in-out infinite alternate;
 }
 
 @keyframes floatGlow{
-    0%{ transform: translate(0%,0%) scale(1); }
-    50%{ transform: translate(3%,-2%) scale(1.05); }
-    100%{ transform: translate(0%,0%) scale(1); }
+    0%{ transform: translate(-4%, -2%) scale(1); }
+    50%{ transform: translate(5%, 3%) scale(1.12); }
+    100%{ transform: translate(-2%, 6%) scale(1.06); }
 }
 
+@keyframes floatGlow2{
+    0%{ transform: translate(3%, 5%) scale(1); }
+    50%{ transform: translate(-6%, -3%) scale(1.15); }
+    100%{ transform: translate(2%, -5%) scale(1.08); }
+}
+
+/* CARD */
 .card{
     width:100%;
     max-width:430px;
@@ -65,18 +85,46 @@ body::before{
     border-radius:28px;
 
     box-shadow:
-        0 20px 50px rgba(140,82,255,0.10),
-        0 10px 25px rgba(255,0,161,0.06);
+        0 20px 50px rgba(140,82,255,0.12),
+        0 10px 25px rgba(255,0,161,0.08);
 
     text-align:center;
+    position:relative;
 }
 
+/* BADGE */
+.nextup-badge{
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:6px 12px;
+
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+
+    color:white;
+    background:linear-gradient(135deg,#FF00A1,#8C52FF);
+
+    box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* NEXT EVENT */
+.next-event{
+    margin-top:10px;
+    font-size:14px;
+    font-weight:700;
+    color:#222;
+}
+
+/* LOGO */
 .logo{
     width:100%;
     max-width:380px;
     border-radius:20px;
     display:block;
-    margin:0 auto 24px;
+    margin:18px auto 24px;
 }
 
 .subtitle{
@@ -88,7 +136,7 @@ body::before{
 .location{
     color:#666;
     font-size:14px;
-    margin-bottom:24px;
+    margin-bottom:18px;
 }
 
 /* BUTTONS */
@@ -117,7 +165,7 @@ body::before{
     box-shadow:0 18px 35px rgba(140,82,255,.28);
 }
 
-/* GIGS */
+/* SECTIONS */
 .gigs{
     margin-top:30px;
     padding-top:24px;
@@ -157,27 +205,18 @@ body::before{
     color:#8C52FF;
 }
 
-.tag{
+.past{
+    opacity:0.6;
+}
+
+.played{
     font-size:10px;
     font-weight:800;
     margin-left:8px;
     padding:3px 8px;
     border-radius:999px;
     color:white;
-    background:#8C52FF;
-}
-
-.tag.today{
-    background:#FF00A1;
-}
-
-.tag.next{
-    background:#8C52FF;
-}
-
-.highlight{
-    color:#222;
-    transform:scale(1.02);
+    background:#999;
 }
 </style>
 </head>
@@ -185,6 +224,9 @@ body::before{
 <body>
 
 <div class="card">
+
+    <div class="nextup-badge">NEXT UP</div>
+    <div id="nextEvent" class="next-event"></div>
 
     <img src="https://i.ibb.co/nZfQCNB/freyindex2.png" class="logo" alt="Frey">
 
@@ -196,21 +238,18 @@ body::before{
         Based in Amsterdam 🇳🇱
     </div>
 
-    <a href="mailto:hello@freycreates.nl" class="btn">
-        ✉️ Bookings
-    </a>
-
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">
-        Instagram
-    </a>
-
-    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">
-        Resident Advisor
-    </a>
+    <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
+    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
+    <a href="https://ra.co/dj/frey-nl" class="btn" target="_blank">Resident Advisor</a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
-        <div id="gigList"></div>
+        <div id="upcoming"></div>
+    </div>
+
+    <div class="gigs">
+        <h3>Past Gigs</h3>
+        <div id="past"></div>
     </div>
 
 </div>
@@ -236,39 +275,51 @@ today.setHours(0,0,0,0);
 
 gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
 
-let nextIndex = gigs.findIndex(g => parseDate(g.date) >= today);
-if(nextIndex === -1) nextIndex = 0;
+const upcoming = gigs.filter(g => parseDate(g.date) >= today);
+const past = gigs.filter(g => parseDate(g.date) < today);
 
-const container = document.getElementById("gigList");
+/* NEXT EVENT FIXED */
+const nextEventEl = document.getElementById("nextEvent");
 
-gigs.forEach((g, i) => {
+if(upcoming.length){
+    const next = upcoming[0];
+    nextEventEl.innerText = `${next.date} — ${next.venue}`;
+} else {
+    nextEventEl.innerText = "No upcoming gigs";
+}
 
+/* UPCOMING */
+const upcomingContainer = document.getElementById("upcoming");
+
+upcoming.forEach((g) => {
     const div = document.createElement("div");
     div.className = "gig";
-
-    const isToday = parseDate(g.date).getTime() === today.getTime();
-    const isNext = i === nextIndex;
-
-    let tag = "";
-
-    if(isToday){
-        tag = `<span class="tag today">TODAY</span>`;
-        div.classList.add("highlight");
-    } else if(isNext){
-        tag = `<span class="tag next">NEXT UP</span>`;
-        div.classList.add("highlight");
-    }
 
     div.innerHTML = `
         <span class="date">${g.date}</span>
         ${g.venue}
-        ${tag}
     `;
 
-    container.appendChild(div);
+    upcomingContainer.appendChild(div);
 });
 
-/* scroll fade-in */
+/* PAST */
+const pastContainer = document.getElementById("past");
+
+past.forEach((g) => {
+    const div = document.createElement("div");
+    div.className = "gig past";
+
+    div.innerHTML = `
+        <span class="date">${g.date}</span>
+        ${g.venue}
+        <span class="played">PLAYED ✓</span>
+    `;
+
+    pastContainer.appendChild(div);
+});
+
+/* animation */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
