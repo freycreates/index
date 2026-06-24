@@ -22,11 +22,11 @@ body{
     font-family:'Open Sans',sans-serif;
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
-    padding:30px;
-    overflow-x:hidden;
+    align-items:center;
+    padding:40px 20px;
     background:#faf8ff;
+    overflow-x:hidden;
 }
 
 /* BACKGROUND */
@@ -46,37 +46,17 @@ body::before{
     animation: floatGlow 8s ease-in-out infinite alternate;
 }
 
-body::after{
-    content:"";
-    position:fixed;
-    inset:-50%;
-    z-index:-1;
-
-    background:
-        radial-gradient(circle at 60% 40%, rgba(140,82,255,0.30), transparent 50%),
-        radial-gradient(circle at 20% 70%, rgba(255,0,161,0.25), transparent 55%);
-
-    filter: blur(80px);
-    animation: floatGlow2 11s ease-in-out infinite alternate;
-}
-
 @keyframes floatGlow{
     0%{ transform: translate(-4%, -2%) scale(1); }
     50%{ transform: translate(5%, 3%) scale(1.12); }
     100%{ transform: translate(-2%, 6%) scale(1.06); }
 }
 
-@keyframes floatGlow2{
-    0%{ transform: translate(3%, 5%) scale(1); }
-    50%{ transform: translate(-6%, -3%) scale(1.15); }
-    100%{ transform: translate(2%, -5%) scale(1.08); }
-}
-
 /* CARD */
 .card{
     width:100%;
-    max-width:430px;
-    padding:24px;
+    max-width:520px; /* 👈 desktop wider */
+    padding:26px;
 
     background:rgba(255,255,255,0.82);
     backdrop-filter:blur(16px);
@@ -113,7 +93,7 @@ body::after{
 /* NEXT EVENT */
 .next-event{
     margin-top:10px;
-    font-size:14px;
+    font-size:15px;
     font-weight:700;
     color:#222;
 }
@@ -121,7 +101,7 @@ body::after{
 /* LOGO */
 .logo{
     width:100%;
-    max-width:380px;
+    max-width:420px;
     border-radius:20px;
     display:block;
     margin:18px auto 24px;
@@ -167,46 +147,40 @@ body::after{
 
 /* SECTIONS */
 .gigs{
-    margin-top:30px;
-    padding-top:24px;
+    margin-top:28px;
+    padding-top:22px;
     border-top:1px solid rgba(140,82,255,.12);
     text-align:left;
 }
 
 .gigs h3{
     text-align:center;
-    font-size:15px;
-    margin-bottom:16px;
+    font-size:14px;
+    margin-bottom:14px;
     color:#8C52FF;
     text-transform:uppercase;
     letter-spacing:1px;
+    cursor:pointer;
+    user-select:none;
 }
 
+/* GIG ITEM */
 .gig{
     font-size:14px;
     color:#555;
-    padding:8px 0;
+    padding:7px 0;
     line-height:1.5;
-
-    opacity:0;
-    transform:translateY(18px);
-    transition:all .6s ease;
-}
-
-.gig.visible{
-    opacity:1;
-    transform:translateY(0);
 }
 
 .date{
     display:inline-block;
-    width:52px;
+    width:55px;
     font-weight:700;
     color:#8C52FF;
 }
 
 .past{
-    opacity:0.6;
+    opacity:0.65;
 }
 
 .played{
@@ -218,6 +192,31 @@ body::after{
     color:white;
     background:#999;
 }
+
+/* ACCORDION */
+#past{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:all .5s ease;
+}
+
+#past.open{
+    max-height:900px;
+    opacity:1;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width:480px){
+    .card{
+        max-width:100%;
+        padding:20px;
+    }
+
+    .logo{
+        max-width:100%;
+    }
+}
 </style>
 </head>
 
@@ -226,6 +225,7 @@ body::after{
 <div class="card">
 
     <div class="nextup-badge">NEXT UP</div>
+
     <div id="nextEvent" class="next-event"></div>
 
     <img src="https://i.ibb.co/nZfQCNB/freyindex2.png" class="logo" alt="Frey">
@@ -248,7 +248,7 @@ body::after{
     </div>
 
     <div class="gigs">
-        <h3>Past Gigs</h3>
+        <h3 onclick="togglePast()">Past Gigs ▾</h3>
         <div id="past"></div>
     </div>
 
@@ -261,7 +261,14 @@ const gigs = [
     { date:"10/7", venue:"Pink Noise, Amersfoort" },
     { date:"25/7", venue:"Milkshake Festival, Amsterdam" },
     { date:"31/7", venue:"Homomonument, Amsterdam" },
-    { date:"1/8", venue:"Prik Pride, Amsterdam" }
+    { date:"1/8", venue:"Prik Pride, Amsterdam" },
+
+    /* PAST GIGS */
+    { date:"19/6", venue:"Ferry, Rotterdam" },
+    { date:"29/5", venue:"Ferry, Rotterdam" },
+    { date:"8/5", venue:"NYX, Amsterdam" },
+    { date:"3/4", venue:"Rabbit's Hole, Singapore" },
+    { date:"28/3", venue:"NYX, Amsterdam" }
 ];
 
 function parseDate(d){
@@ -278,7 +285,7 @@ gigs.sort((a,b)=>parseDate(a.date)-parseDate(b.date));
 const upcoming = gigs.filter(g => parseDate(g.date) >= today);
 const past = gigs.filter(g => parseDate(g.date) < today);
 
-/* NEXT EVENT FIXED */
+/* NEXT EVENT */
 const nextEventEl = document.getElementById("nextEvent");
 
 if(upcoming.length){
@@ -319,18 +326,10 @@ past.forEach((g) => {
     pastContainer.appendChild(div);
 });
 
-/* animation */
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("visible");
-        }
-    });
-}, { threshold:0.15 });
-
-document.querySelectorAll(".gig").forEach(el => {
-    observer.observe(el);
-});
+/* TOGGLE */
+function togglePast(){
+    document.getElementById("past").classList.toggle("open");
+}
 </script>
 
 </body>
