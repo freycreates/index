@@ -36,7 +36,7 @@ body{
     }
 }
 
-/* ANIMATED BACKGROUND */
+/* ANIMATED BACKGROUND (UNCHANGED) */
 body::before{
     content:"";
     position:fixed;
@@ -90,6 +90,7 @@ body::before{
     }
 }
 
+/* NEXT UP */
 .nextup-badge{
     position:absolute;
     top:-12px;
@@ -138,18 +139,34 @@ body::before{
     margin:18px auto 24px;
 }
 
+/* 🔥 MOBILE FIX ONLY (no design changes) */
+@media (max-width: 600px){
+    .logo{
+        max-width:240px;
+        margin:10px auto 14px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .next-event{
+        font-size:14px;
+    }
+}
+
 /* TEXT */
 .subtitle{
     font-size:15px;
     color:#666;
-    margin-bottom:10px; /* a bit more space */
+    margin-bottom:10px;
 }
 
 .bio{
     font-size:11.5px;
     color:#888;
-    line-height:1.7; /* improved readability */
-    margin-bottom:18px; /* space before buttons */
+    line-height:1.7;
+    margin-bottom:18px;
     padding:0 10px;
 }
 
@@ -167,7 +184,7 @@ body::before{
     text-decoration:none;
     color:white;
     padding:12px 16px;
-    margin-bottom:14px; /* slightly more spacing between buttons */
+    margin-bottom:14px;
     border-radius:999px;
     font-weight:700;
     font-size:13.5px;
@@ -208,7 +225,7 @@ body::before{
 .gig{
     font-size:14px;
     color:#555;
-    padding:8px 0; /* slightly more breathing room */
+    padding:8px 0;
 }
 
 @media (prefers-color-scheme: dark){
@@ -257,9 +274,9 @@ body::before{
 
     <div class="divider"></div>
 
-    <img src="https://i.ibb.co/mrgPbyMK/freyindex3.png" class="logo" alt="Frey">
+    <img src="https://i.ibb.co/mrgPbyMK/freyindex3.png" class="logo" alt="Frey logo">
 
-    <div class="subtitle"><strong>DJ | CREATIVE | SOCIAL MEDIA MANAGEMENT </strong></div>
+    <div class="subtitle"><strong>DJ | CREATIVE | SOCIAL MEDIA MANAGEMENT</strong></div>
 
     <div class="bio">
         A pop-culture enthusiast raised on Gaga, Britney and ABBA finds religion in the queer club scene. In his set, discover your own kind of church through pop girls from today and yesterday.
@@ -267,12 +284,7 @@ body::before{
 
     <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
 
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">
-        <svg class="icon" viewBox="0 0 24 24">
-            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 14 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 14 3.5 3.5 0 0 0 12 10.5zM18 6.8a1.2 1.2 0 1 1-1.2-1.2A1.2 1.2 0 0 1 18 6.8z"/>
-        </svg>
-        Instagram
-    </a>
+    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
@@ -287,7 +299,6 @@ body::before{
 </div>
 
 <script>
-// unchanged JS
 const gigs = [
     { date:"27/6", venue:"Backsteeg, Rotterdam" },
     { date:"29/6", venue:"FERRY, Rotterdam" },
@@ -303,16 +314,7 @@ const gigs = [
 
     { date:"20/3", venue:"FERRY, Rotterdam" },
     { date:"16/3", venue:"FERRY, Rotterdam" },
-    { date:"14/2", venue:"FERRY, Rotterdam" },
-    { date:"9/2", venue:"FERRY, Rotterdam" },
-    { date:"2/2", venue:"FERRY, Rotterdam" },
-    { date:"10/1", venue:"NYX, Amsterdam" },
-
-    { date:"19/6", venue:"FERRY, Rotterdam" },
-    { date:"29/5", venue:"FERRY, Rotterdam" },
-    { date:"8/5", venue:"NYX, Amsterdam" },
-    { date:"3/4", venue:"Rabbit's Hole, Singapore" },
-    { date:"28/3", venue:"NYX, Amsterdam" }
+    { date:"14/2", venue:"FERRY, Rotterdam" }
 ];
 
 function parseDate(d){
