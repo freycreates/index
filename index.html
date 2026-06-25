@@ -31,9 +31,7 @@ body{
 
 /* DARK MODE BACKGROUND BASE */
 @media (prefers-color-scheme: dark){
-    body{
-        background:#0b0b10;
-    }
+    body{ background:#0b0b10; }
 }
 
 /* ANIMATED BACKGROUND (UNCHANGED) */
@@ -76,18 +74,13 @@ body::before{
     padding:26px;
     background:rgba(255,255,255,0.78);
     backdrop-filter:blur(16px);
-    border:1px solid rgba(255,255,255,0.8);
     border-radius:28px;
-    box-shadow:0 20px 50px rgba(140,82,255,0.12), 0 10px 25px rgba(255,0,161,0.08);
     text-align:center;
     position:relative;
 }
 
 @media (prefers-color-scheme: dark){
-    .card{
-        background:rgba(20,20,25,0.88);
-        border:1px solid rgba(255,255,255,0.10);
-    }
+    .card{ background:rgba(20,20,25,0.88); }
 }
 
 /* NEXT UP */
@@ -100,7 +93,7 @@ body::before{
     border-radius:999px;
     font-size:11px;
     font-weight:800;
-    color:white;
+    color:#fff;
     background:linear-gradient(135deg,#FF00A1,#8C52FF);
 }
 
@@ -115,121 +108,81 @@ body::before{
     .next-event{ color:#fff; }
 }
 
+/* divider */
 .divider{
-    width:100%;
     height:1px;
-    margin:14px 0 18px 0;
-    background:linear-gradient(90deg,transparent,rgba(140,82,255,0.35),rgba(255,0,161,0.35),rgba(140,82,255,0.35),transparent);
-    opacity:0.7;
-    animation: dividerPulse 4s ease-in-out infinite;
-}
-
-@keyframes dividerPulse{
-    0%{opacity:0.35;}
-    50%{opacity:0.9;}
-    100%{opacity:0.35;}
+    margin:14px 0 18px;
+    background:linear-gradient(90deg,transparent,rgba(140,82,255,0.35),rgba(255,0,161,0.35),transparent);
 }
 
 /* LOGO */
 .logo{
     width:100%;
     max-width:420px;
-    border-radius:20px;
-    display:block;
     margin:18px auto 24px;
+    display:block;
 }
 
-/* 🔥 MOBILE FIX ONLY (no design changes) */
+/* MOBILE FIX: logo slightly smaller */
 @media (max-width: 600px){
     .logo{
-        max-width:240px;
+        max-width:230px;
         margin:10px auto 14px;
     }
-
-    .card{
-        padding:20px;
-    }
-
-    .next-event{
-        font-size:14px;
-    }
 }
 
-/* TEXT */
+/* subtitle */
 .subtitle{
-    font-size:15px;
+    font-size:14px; /* ↓ smaller as requested */
     color:#666;
-    margin-bottom:10px;
+    margin-bottom:8px;
+    letter-spacing:0.3px;
 }
 
+/* bio */
 .bio{
     font-size:11.5px;
     color:#888;
     line-height:1.7;
     margin-bottom:18px;
-    padding:0 10px;
 }
 
-@media (prefers-color-scheme: dark){
-    .subtitle{ color:#d0d0d0; }
-    .bio{ color:#c7c7c7; }
-}
-
-/* BUTTONS */
+/* buttons */
 .btn{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:8px;
     text-decoration:none;
-    color:white;
+    color:#fff;
     padding:12px 16px;
-    margin-bottom:14px;
+    margin-bottom:12px;
     border-radius:999px;
     font-weight:700;
     font-size:13.5px;
-    background:linear-gradient(135deg,#FF00A1 0%,#8C52FF 100%);
-    box-shadow:0 10px 22px rgba(140,82,255,.22);
-    transition:all .25s ease;
+    background:linear-gradient(135deg,#FF00A1,#8C52FF);
 }
 
-.btn:hover{
-    transform:translateY(-4px) scale(1.02);
-    box-shadow:0 18px 35px rgba(140,82,255,0.28);
-}
-
-.icon{
-    width:16px;
-    height:16px;
-    fill:white;
-}
-
-/* GIGS */
+/* gigs */
 .gigs{
-    margin-top:28px;
-    padding-top:22px;
-    border-top:1px solid rgba(140,82,255,.12);
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px solid rgba(140,82,255,.15);
     text-align:left;
 }
 
 .gigs h3{
     text-align:center;
     font-size:14px;
-    margin-bottom:14px;
+    margin-bottom:12px;
     color:#8C52FF;
     text-transform:uppercase;
     letter-spacing:1px;
-    cursor:pointer;
 }
 
 .gig{
     font-size:14px;
     color:#555;
-    padding:8px 0;
-}
-
-@media (prefers-color-scheme: dark){
-    .gig{ color:#eaeaea; }
+    padding:6px 0;
 }
 
 .date{
@@ -239,23 +192,11 @@ body::before{
     color:#8C52FF;
 }
 
-.past{opacity:0.65;}
-
-.played{
-    font-size:10px;
-    font-weight:800;
-    margin-left:8px;
-    padding:3px 8px;
-    border-radius:999px;
-    color:white;
-    background:#999;
-}
-
 #past{
     max-height:0;
     overflow:hidden;
     opacity:0;
-    transition:all .5s ease;
+    transition:.5s ease;
 }
 
 #past.open{
@@ -274,17 +215,17 @@ body::before{
 
     <div class="divider"></div>
 
-    <img src="https://i.ibb.co/mrgPbyMK/freyindex3.png" class="logo" alt="Frey logo">
+    <img src="https://i.ibb.co/mrgPbyMK/freyindex3.png" class="logo" alt="Frey">
 
     <div class="subtitle"><strong>DJ | CREATIVE | SOCIAL MEDIA MANAGEMENT</strong></div>
 
     <div class="bio">
-        A pop-culture enthusiast raised on Gaga, Britney and ABBA finds religion in the queer club scene. In his set, discover your own kind of church through pop girls from today and yesterday.
+        A pop-culture enthusiast raised on Gaga, Britney, ABBA finds religion in the queer club scene.
+        In his set, discover your own church through pop girls from today and yesterday.
     </div>
 
     <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
-
-    <a href="https://instagram.com/frey.m4a" class="btn" target="_blank">Instagram</a>
+    <a href="https://instagram.com/frey.m4a" class="btn">Instagram</a>
 
     <div class="gigs">
         <h3>Upcoming Gigs</h3>
@@ -292,7 +233,7 @@ body::before{
     </div>
 
     <div class="gigs">
-        <h3 onclick="togglePast()">Past Gigs ▾</h3>
+        <h3 onclick="togglePast()" style="cursor:pointer;">Past Gigs ▾</h3>
         <div id="past"></div>
     </div>
 
@@ -303,18 +244,7 @@ const gigs = [
     { date:"27/6", venue:"Backsteeg, Rotterdam" },
     { date:"29/6", venue:"FERRY, Rotterdam" },
     { date:"10/7", venue:"Pink Noise, Amersfoort" },
-    { date:"25/7", venue:"Milkshake Festival, Amsterdam" },
-    { date:"31/7", venue:"Homomonument, Amsterdam" },
-    { date:"1/8", venue:"Prik Pride, Amsterdam" },
-    { date:"1/8", venue:"Paradiso, Amsterdam" },
-    { date:"6/8", venue:"Pride Village Queerfest, Amsterdam" },
-    { date:"8/8", venue:"NYX, Amsterdam" },
-    { date:"28/8", venue:"FERRY, Rotterdam" },
-    { date:"5/9", venue:"Hullabaloo, Groningen" },
-
-    { date:"20/3", venue:"FERRY, Rotterdam" },
-    { date:"16/3", venue:"FERRY, Rotterdam" },
-    { date:"14/2", venue:"FERRY, Rotterdam" }
+    { date:"25/7", venue:"Milkshake Festival, Amsterdam" }
 ];
 
 function parseDate(d){
@@ -343,11 +273,10 @@ upcoming.forEach(g=>{
 });
 
 const pastContainer=document.getElementById("past");
-past.sort((a,b)=>parseDate(b.date)-parseDate(a.date))
-.forEach(g=>{
+past.forEach(g=>{
     const div=document.createElement("div");
-    div.className="gig past";
-    div.innerHTML=`<span class="date">${g.date}</span>${g.venue}<span class="played">PLAYED ✓</span>`;
+    div.className="gig";
+    div.innerHTML=`<span class="date">${g.date}</span>${g.venue}`;
     pastContainer.appendChild(div);
 });
 
