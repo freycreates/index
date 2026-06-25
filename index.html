@@ -29,19 +29,16 @@ body{
     overflow-x:hidden;
 }
 
-/* BACKGROUND */
 body::before{
     content:"";
     position:fixed;
     inset:-20%;
     z-index:-1;
-
     background:
         radial-gradient(circle at 15% 25%, rgba(140,82,255,0.85), transparent 40%),
         radial-gradient(circle at 85% 20%, rgba(255,0,161,0.75), transparent 45%),
         radial-gradient(circle at 40% 85%, rgba(120,60,255,0.55), transparent 50%),
         radial-gradient(circle at 80% 90%, rgba(255,0,161,0.45), transparent 55%);
-
     filter: blur(28px);
     animation: floatGlow 6s ease-in-out infinite alternate;
 }
@@ -52,7 +49,6 @@ body::before{
     100%{ transform: translate(-2%, 60%) scale(1.12) rotate(-40deg); }
 }
 
-/* CARD */
 .card{
     width:100%;
     max-width:520px;
@@ -86,39 +82,20 @@ body::before{
     color:#222;
 }
 
-/* ✨ UPDATED DIVIDER (animated glow) */
 .divider{
     width:100%;
     height:1px;
     margin:14px 0 18px 0;
-
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(140,82,255,0.35),
-        rgba(255,0,161,0.35),
-        rgba(140,82,255,0.35),
-        transparent
-    );
-
+    background:linear-gradient(90deg,transparent,rgba(140,82,255,0.35),rgba(255,0,161,0.35),rgba(140,82,255,0.35),transparent);
     opacity:0.7;
     animation: dividerPulse 4s ease-in-out infinite;
     filter: blur(0.2px);
 }
 
 @keyframes dividerPulse{
-    0%{
-        opacity:0.35;
-        filter: blur(0.2px);
-    }
-    50%{
-        opacity:0.9;
-        filter: blur(0.6px);
-    }
-    100%{
-        opacity:0.35;
-        filter: blur(0.2px);
-    }
+    0%{opacity:0.35;filter:blur(0.2px);}
+    50%{opacity:0.9;filter:blur(0.6px);}
+    100%{opacity:0.35;filter:blur(0.2px);}
 }
 
 .logo{
@@ -132,7 +109,16 @@ body::before{
 .subtitle{
     font-size:15px;
     color:#666;
-    margin-bottom:10px;
+    margin-bottom:6px;
+}
+
+.bio{
+    font-size:11.5px;
+    color:#888;
+    line-height:1.5;
+    margin-bottom:14px;
+    padding:0 10px;
+    opacity:0.9;
 }
 
 .location{
@@ -141,23 +127,18 @@ body::before{
     margin-bottom:18px;
 }
 
-/* BUTTONS */
 .btn{
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
-
     text-decoration:none;
     color:white;
-
     padding:16px 20px;
     margin-bottom:14px;
-
     border-radius:999px;
     font-weight:700;
     font-size:15px;
-
     background:linear-gradient(135deg,#FF00A1 0%,#8C52FF 100%);
     box-shadow:0 10px 22px rgba(140,82,255,.22);
     transition:all .25s ease;
@@ -168,14 +149,8 @@ body::before{
     box-shadow:0 18px 35px rgba(140,82,255,0.28);
 }
 
-/* ICON */
-.icon{
-    width:18px;
-    height:18px;
-    fill:white;
-}
+.icon{width:18px;height:18px;fill:white;}
 
-/* GIGS */
 .gigs{
     margin-top:28px;
     padding-top:22px;
@@ -208,7 +183,7 @@ body::before{
     color:#8C52FF;
 }
 
-.past{ opacity:0.65; }
+.past{opacity:0.65;}
 
 .played{
     font-size:10px;
@@ -239,16 +214,17 @@ body::before{
 <div class="card">
 
     <div class="nextup-badge">NEXT UP</div>
-
     <div id="nextEvent" class="next-event"></div>
 
-    <!-- animated divider -->
     <div class="divider"></div>
 
     <img src="https://i.ibb.co/mrgPbyMK/freyindex3.png" class="logo" alt="Frey">
 
     <div class="subtitle"><strong>DJ | Creative | Social Media Management</strong></div>
-    <div class="location">Based in Amsterdam 🇳🇱</div>
+
+    <div class="bio">
+        A pop-culture enthusiast raised on Gaga, Britney, and ABBA finds religion in the queer club scene. In his set, discover your own kind of church through pop girls of today and yesterday.
+    </div>
 
     <a href="mailto:hello@freycreates.nl" class="btn">✉️ Bookings & Collabs</a>
 
@@ -272,7 +248,7 @@ body::before{
 </div>
 
 <script>
-// unchanged JS
+
 const gigs = [
     { date:"27/6", venue:"Backsteeg, Rotterdam" },
     { date:"29/6", venue:"FERRY, Rotterdam" },
@@ -282,8 +258,15 @@ const gigs = [
     { date:"1/8", venue:"Prik Pride, Amsterdam" },
     { date:"6/8", venue:"Pride Village Queerfest, Amsterdam" },
     { date:"8/8", venue:"NYX, Amsterdam" },
-    { date:"28/8",venue:"FERRY, Rotterdam" },
-    { date:"5/9",venue:"Hullabaloo, Groningen" },
+    { date:"28/8", venue:"FERRY, Rotterdam" },
+    { date:"5/9", venue:"Hullabaloo, Groningen" },
+
+    { date:"20/3", venue:"FERRY, Rotterdam" },
+    { date:"16/3", venue:"FERRY, Rotterdam" },
+    { date:"14/2", venue:"FERRY, Rotterdam" },
+    { date:"9/2", venue:"FERRY, Rotterdam" },
+    { date:"2/2", venue:"FERRY, Rotterdam" },
+    { date:"10/1", venue:"NYX, Amsterdam" },
 
     { date:"19/6", venue:"FERRY, Rotterdam" },
     { date:"29/5", venue:"FERRY, Rotterdam" },
@@ -326,8 +309,7 @@ upcoming.forEach((g) => {
 
 const pastContainer = document.getElementById("past");
 
-past
-    .sort((a,b)=>parseDate(b.date)-parseDate(a.date))
+past.sort((a,b)=>parseDate(b.date)-parseDate(a.date))
     .forEach((g) => {
         const div = document.createElement("div");
         div.className = "gig past";
@@ -342,6 +324,7 @@ past
 function togglePast(){
     document.getElementById("past").classList.toggle("open");
 }
+
 </script>
 
 </body>
